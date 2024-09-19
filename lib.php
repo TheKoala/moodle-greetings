@@ -24,11 +24,6 @@
 
 /**
  * Retorna a string de acordo com a localização do usuário
- *
- * This method should ONLY BE USED BY UNIT TESTS. It clears all of
- * accesslib's private caches. You need to do this before setting up test data,
- * and also at the end of the tests.
- *
  * @return string
  */
 function local_greetings_get_greeting($user) {
@@ -59,4 +54,33 @@ function local_greetings_get_greeting($user) {
     }
 
     return get_string($langstr, 'local_greetings', fullname($user));
+}
+
+/**
+ * Insere um link para na Página Inicial no menu de Navegação
+ * @param navigation_node $frontpage Node que representa a página inicial na arvore de navegação
+ */
+function local_greetings_extend_navigation_frontpage(navigation_node $frontpage) {
+    $frontpage->add(
+        get_string('pluginname', 'local_greetings'),
+        new moodle_url('/local/greetings'),
+        navigation_node::TYPE_CUSTOM,
+    );
+}
+
+/**
+ * Insere um link para navegação na páginal inicial para themas nao baseados no boost
+ * @param global_navigation $root representa o nó raiz
+ */
+function local_greetings_extend_navigation(global_navigation $root) {
+    $node = navigation_node::create(
+        get_string('pluginname', 'local_greetings'),
+        new moodle_url('/local/greetings/index.php'),
+        navigation_node::TYPE_CUSTOM,
+        null,
+        null,
+        new pix_icon('t/message', '')
+    );
+    $node->showinflatnavigation = true;
+    $root->add_node($node);
 }
