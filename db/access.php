@@ -52,4 +52,11 @@ $capabilities = [
             'manager' => CAP_ALLOW,
         ],
     ],
+    'local/greetings:deleteownmessage' => [
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archtypes' => [
+            'user' => CAP_ALLOW,
+        ],
+    ],
 ];
