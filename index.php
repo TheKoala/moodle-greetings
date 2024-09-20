@@ -108,8 +108,12 @@ if ($allowview) {
     $messages = $DB->get_records_sql($sql);
 
     echo $OUTPUT->box_start('card-columns');
+    $cardbackgroundcolor = get_config('local_greetings', 'messagecardbgcolor');
     foreach ($messages as $m) {
-        echo html_writer::start_tag('div', ['class' => 'card']);
+        echo html_writer::start_tag(
+            'div',
+            ['class' => 'card', 'style' => "background: $cardbackgroundcolor"]
+        );
         echo html_writer::start_tag('div', ['class' => 'card-body']);
 
         echo html_writer::tag(
