@@ -36,6 +36,12 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_title(get_string('pluginname', 'local_greetings'));
 $PAGE->set_heading(get_string('pluginname', 'local_greetings'));
 
+require_login();
+
+if (isguestuser()) {
+    throw new moodle_exception('noguest');
+}
+
 $messageform = new \local_greetings\form\message_form();
 
 if ($data = $messageform->get_data()) {
@@ -82,7 +88,7 @@ foreach ($messages as $m) {
 
             echo html_writer::tag(
                 'p',
-                $m->message,
+                format_text($m->message, FORMAT_PLAIN),
                 ['class' => 'card-text']
             );
 
