@@ -60,6 +60,7 @@ if ($data = $messageform->get_data()) {
         $record->userid = $USER->id;
 
         $DB->insert_record('local_greetings_messages', $record);
+        redirect($PAGE->url);
     }
 }
 
@@ -78,7 +79,7 @@ if ($action == 'del') {
     }
 }
 
-// Construção do HTML da página
+ // Construção do HTML da página.
 echo $OUTPUT->header();
 
 if (isloggedin()) {
