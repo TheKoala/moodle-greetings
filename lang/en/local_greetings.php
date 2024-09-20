@@ -33,4 +33,5 @@ $string['greetinguserfj'] = 'Bula, {$a}.';
 $string['greetingusernz'] = 'Kia Ora, {$a}.';
 $string['greetinguserptbr'] = 'Seja Bem-Vindo, {$a}.';
 $string['pluginname'] = 'Greetings';
+$string['postedby'] = 'Posted by {$a}.';
 $string['yourmessage'] = 'Your message';
