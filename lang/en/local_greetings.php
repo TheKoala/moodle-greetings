@@ -26,6 +26,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['greetingloggedinuser'] = 'Greetings, {$a}.';
+$string['greetings:deleteanymessage'] = 'Delete any message on the Greetings wall';
+$string['greetings:postmessages'] = 'Post a new message on the Greetings wall';
+$string['greetings:viewmessages'] = 'View messages on the Greetings wall';
 $string['greetinguser'] = 'Greetings, user.';
 $string['greetinguserau'] = 'Hello, {$a}.';
 $string['greetinguseres'] = 'Hola, {$a}.';
