@@ -59,4 +59,19 @@ $capabilities = [
             'user' => CAP_ALLOW,
         ],
     ],
+    'local/greetings:editanymessage' => [
+        'riskbitmask' => RISK_SPAM,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archtypes' => [
+            'manager' => CAP_ALLOW,
+        ],
+    ],
+    'local/greetings:editownmessage' => [
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_SYSTEM,
+        'archtypes' => [
+            'user' => CAP_ALLOW,
+        ],
+    ],
 ];
