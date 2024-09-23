@@ -104,7 +104,7 @@ if ($action == 'del') {
         }
         $record = $DB->get_record('local_greetings_messages', $params);
         if ($record) {
-            $editform = ['message' => $record->message, 'messageid'=> $record->id];
+            $editform = ['message' => $record->message, 'messageid' => $record->id];
             $messageform->set_data($editform);
         }
     }

@@ -40,9 +40,6 @@ class message_form extends \moodleform {
         $mform->setType('messageid', PARAM_TEXT);
 
         $this->add_action_buttons(true, get_string('submit'));
-
-        //$submitlabel = get_string('submit');
-        //$mform->addElement('submit', 'submitmessage', $submitlabel);
     }
 
 }
