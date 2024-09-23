@@ -36,8 +36,14 @@ class message_form extends \moodleform {
         $mform->addElement('textarea', 'message', get_string('yourmessage', 'local_greetings'));
         $mform->setType('message', PARAM_TEXT);
 
-        $mform->addElement('hidden', 'messageid');
-        $mform->setType('messageid', PARAM_TEXT);
+        if (isset($this->_customdata['message'])) {
+            $message = $this->_customdata['message'];
+
+            $mform->addElement('hidden', 'id', $message->id);
+            $mform->setType('id', PARAM_INT);
+
+            $mform->setDefault('message', $message->message);
+        }
 
         $this->add_action_buttons(true, get_string('submit'));
     }

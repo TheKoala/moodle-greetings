@@ -46,8 +46,6 @@ $allowpost = has_capability('local/greetings:postmessages', $context);
 $allowview = has_capability('local/greetings:viewmessages', $context);
 $deleteanypost = has_capability('local/greetings:deleteanymessage', $context);
 $deleteownpost = has_capability('local/greetings:deleteownmessage', $context);
-$editanypost = has_capability('local/greetings:editanymessage', $context);
-$editownpost = has_capability('local/greetings:editownmessage', $context);
 
 $messageform = new \local_greetings\form\message_form();
 
@@ -59,24 +57,14 @@ if ($messageform->is_cancelled()) {
 if ($data = $messageform->get_data()) {
     require_capability('local/greetings:postmessages', $context);
     $message = required_param('message', PARAM_TEXT);
-    $messageid = optional_param('messageid', -1, PARAM_TEXT);
 
-    if (!empty($message) && $messageid == 0) {
+    if (!empty($message)) {
         $record = new stdClass;
         $record->message = $message;
         $record->timecreated = time();
         $record->userid = $USER->id;
 
         $DB->insert_record('local_greetings_messages', $record);
-        redirect($PAGE->url);
-    } else if (!empty($message) && $messageid != -1) {
-        $record = new stdClass;
-        $record->id = $messageid;
-        $record->message = $message;
-        $record->timecreated = time();
-        $record->userid = $USER->id;
-
-        $DB->update_record('local_greetings_messages', $record);
         redirect($PAGE->url);
     }
 }
@@ -93,20 +81,6 @@ if ($action == 'del') {
         $DB->delete_records('local_greetings_messages', $params);
 
         redirect($PAGE->url);
-    }
-} else if ($action == 'edit') {
-    require_sesskey();
-    $id = required_param('id', PARAM_TEXT);
-    if ($editanypost || $editownpost) {
-        $params = ['id' => $id];
-        if (!$editanypost) {
-            $params += ['userid' => $USER->id];
-        }
-        $record = $DB->get_record('local_greetings_messages', $params);
-        if ($record) {
-            $editform = ['message' => $record->message, 'messageid' => $record->id];
-            $messageform->set_data($editform);
-        }
     }
 }
 
@@ -169,14 +143,16 @@ if ($allowview) {
 
         if ($deleteanypost || ($deleteownpost && $USER->id == $m->userid)) {
             echo html_writer::start_tag('p', ['class' => 'card-footer text-center']);
+
             echo html_writer::link(
                 new moodle_url(
-                    '/local/greetings/index.php',
-                    ['action' => 'edit', 'id' => $m->id, 'sesskey' => sesskey()]
+                    '/local/greetings/edit.php',
+                    ['id' => $m->id]
                 ),
                 $OUTPUT->pix_icon('t/editinline', get_string('edit')),
                 ['role' => 'button']
             );
+
             echo html_writer::link(
                 new moodle_url(
                     '/local/greetings/index.php',
@@ -185,6 +161,7 @@ if ($allowview) {
                 $OUTPUT->pix_icon('t/delete', get_string('delete')),
                 ['role' => 'button']
             );
+
             echo html_writer::end_tag('p');
         }
 
