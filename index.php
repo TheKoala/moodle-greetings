@@ -85,7 +85,9 @@ if ($action == 'del') {
 }
 
  // Construção do HTML da página.
-echo $OUTPUT->header();
+$output = $PAGE->get_renderer('local_greetings');
+
+echo $output->header();
 
 if (isloggedin()) {
     echo '<h2>' .
@@ -108,68 +110,12 @@ if ($allowview) {
     $sql = "SELECT m.id, m.message, m.timecreated, m.userid {$userfieldssql->selects}
             FROM {local_greetings_messages} m
             LEFT JOIN {user} u ON u.id = m.userid
-            ORDER BY timecreated DESC";
+            ORDER BY timecreated DESC LIMIT 10";
 
     $messages = $DB->get_records_sql($sql);
 
-    echo $OUTPUT->box_start('card-columns');
-    $cardbackgroundcolor = get_config('local_greetings', 'messagecardbgcolor');
-    foreach ($messages as $m) {
-        echo html_writer::start_tag(
-            'div',
-            ['class' => 'card', 'style' => "background: $cardbackgroundcolor"]
-        );
-        echo html_writer::start_tag('div', ['class' => 'card-body']);
-
-        echo html_writer::tag(
-            'p',
-            format_text($m->message, FORMAT_PLAIN),
-            ['class' => 'card-text']
-        );
-
-        echo html_writer::tag(
-            'p',
-            get_string('postedby', 'local_greetings', $m->firstname),
-            ['class' => 'card-text']
-        );
-
-        echo html_writer::start_tag('p', ['class' => 'card-text']);
-        echo html_writer::tag(
-            'small',
-            userdate($m->timecreated),
-            ['class' => 'text-muted']
-            );
-        echo html_writer::end_tag('p');
-
-        if ($deleteanypost || ($deleteownpost && $USER->id == $m->userid)) {
-            echo html_writer::start_tag('p', ['class' => 'card-footer text-center']);
-
-            echo html_writer::link(
-                new moodle_url(
-                    '/local/greetings/edit.php',
-                    ['id' => $m->id]
-                ),
-                $OUTPUT->pix_icon('t/editinline', get_string('edit')),
-                ['role' => 'button']
-            );
-
-            echo html_writer::link(
-                new moodle_url(
-                    '/local/greetings/index.php',
-                    ['action' => 'del', 'id' => $m->id, 'sesskey' => sesskey()]
-                ),
-                $OUTPUT->pix_icon('t/delete', get_string('delete')),
-                ['role' => 'button']
-            );
-
-            echo html_writer::end_tag('p');
-        }
-
-        echo html_writer::end_tag('div');
-        echo html_writer::end_tag('div');
-    }
+    $renderable = new \local_greetings\output\index_page($messages);
+    echo $output->render($renderable);
 }
 
-echo $OUTPUT->box_end();
-
-echo $OUTPUT->footer();
+echo $output->footer();

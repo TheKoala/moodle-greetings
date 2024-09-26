@@ -57,7 +57,7 @@ function local_greetings_get_greeting($user) {
 }
 
 /**
- * Insere um link para na Página Inicial no menu de Navegação
+ * Insere um link para Greetings Plugin na Página Inicial no menu de Navegação
  * @param navigation_node $frontpage Node que representa a página inicial na arvore de navegação
  */
 function local_greetings_extend_navigation_frontpage(navigation_node $frontpage) {
@@ -71,7 +71,7 @@ function local_greetings_extend_navigation_frontpage(navigation_node $frontpage)
 }
 
 /**
- * Insere um link para navegação na páginal inicial para themas nao baseados no boost
+ * Insere um link para navegação na páginal inicial para temas nao baseados no boost
  * @param global_navigation $root representa o nó raiz
  */
 function local_greetings_extend_navigation(global_navigation $root) {
@@ -86,5 +86,31 @@ function local_greetings_extend_navigation(global_navigation $root) {
         );
         $node->showinflatnavigation = true;
         $root->add_node($node);
+    }
+}
+
+/**
+ * Insere um link para Greetings Plugin no menu de navegação do curso
+ * @param navigation_node $parentnode
+ * @param stdClass $course
+ * @param context_course $context
+ * @return void
+ */
+function local_greetings_extend_navigation_course(
+    navigation_node $parentnode,
+    stdClass $course,
+    context_course $context
+) {
+    if (isloggedin() && !isguestuser()) {
+        $node = navigation_node::create(
+            get_string('pluginname', 'local_greetings'),
+            new moodle_url('/local/greetings/index.php'),
+            navigation_node::TYPE_CUSTOM,
+            null,
+            null,
+            new pix_icon('t/message', '')
+        );
+        $node->showinflatnavigation = true;
+        $parentnode->add_node($node);
     }
 }
