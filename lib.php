@@ -92,25 +92,14 @@ function local_greetings_extend_navigation(global_navigation $root) {
 /**
  * Insere um link para Greetings Plugin no menu de navegação do curso
  * @param navigation_node $parentnode
- * @param stdClass $course
- * @param context_course $context
  * @return void
  */
-function local_greetings_extend_navigation_course(
-    navigation_node $parentnode,
-    stdClass $course,
-    context_course $context
-) {
+function local_greetings_extend_navigation_course(navigation_node $parentnode) {
     if (isloggedin() && !isguestuser()) {
-        $node = navigation_node::create(
+        $node = $parentnode->add(
             get_string('pluginname', 'local_greetings'),
             new moodle_url('/local/greetings/index.php'),
             navigation_node::TYPE_CUSTOM,
-            null,
-            null,
-            new pix_icon('t/message', '')
         );
-        $node->showinflatnavigation = true;
-        $parentnode->add_node($node);
     }
 }

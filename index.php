@@ -89,6 +89,9 @@ $output = $PAGE->get_renderer('local_greetings');
 
 echo $output->header();
 
+// Adding simple navmenu acting as "terciary navigation".
+echo $output->render_from_template('local_greetings/navmenu', []);
+
 if (isloggedin()) {
     echo '<h2>' .
         local_greetings_get_greeting($USER)
@@ -107,7 +110,7 @@ if ($allowview) {
     $userfields = \core_user\fields::for_name()->with_identity($context);
     $userfieldssql = $userfields->get_sql('u');
 
-    $sql = "SELECT m.id, m.message, m.timecreated, m.userid {$userfieldssql->selects}
+    $sql = "SELECT m.id, m.message, m.timecreated, m.userid, u.firstname, u.lastname
             FROM {local_greetings_messages} m
             LEFT JOIN {user} u ON u.id = m.userid
             ORDER BY timecreated DESC LIMIT 10";

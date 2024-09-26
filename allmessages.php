@@ -39,6 +39,15 @@ if (isguestuser()) {
 
 require_capability('local/greetings:viewmessages', context_system::instance());
 
+$homenode = $PAGE->navigation->add(
+    get_string('pluginname', 'local_greetings'),
+    new moodle_url('/local/greetings')
+);
+$allmessagesnode = $homenode->add(
+    get_string('allmessages', 'local_greetings'),
+    $PAGE->url
+);
+
 $output = $PAGE->get_renderer('local_greetings');
 
 echo $output->header();
@@ -48,7 +57,7 @@ $userfieldssql = $userfields->get_sql('u');
 
 $table = new local_greetings\messagelist($USER->id);
 
-$table->set_sql("m.id, m.message, m.timecreated, m.userid {$userfieldssql->selects}",
+$table->set_sql("m.id, m.message, m.timecreated, m.userid, u.firstname, u.lastname",
     "{local_greetings_messages} m LEFT JOIN {user} u ON u.id = m.userid",
     true);
 
