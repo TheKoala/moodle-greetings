@@ -84,7 +84,7 @@ if ($action == 'del') {
     }
 }
 
- // Construção do HTML da página.
+// Construção do HTML da página.
 $output = $PAGE->get_renderer('local_greetings');
 
 echo $output->header();
@@ -120,5 +120,16 @@ if ($allowview) {
     $renderable = new \local_greetings\output\index_page($messages);
     echo $output->render($renderable);
 }
+
+$PAGE->requires->js_call_amd(
+    'local_greetings/helloworld',
+    'init',
+    [$USER->firstname, $USER->lastname]
+);
+
+echo $output->render_from_template(
+    'local_greetings/helloworldjs',
+    ['first' => $USER->firstname, 'last' => $USER->lastname]
+);
 
 echo $output->footer();
