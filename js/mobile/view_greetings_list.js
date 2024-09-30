@@ -1,5 +1,4 @@
-<?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,20 +11,10 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Plugin version and other meta-data are defined here.
- *
- * @package     local_greetings
- * @copyright   2024 Felipe Lima felipelima8556@gmail.com
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+const translate = key =>
+    this.TranslateService.instant(`plugin.local_greetings.${key}`);
+const observer = this.CoreEventsProvider.on('local_greetings:messages-updated', () => this.refreshContent());
 
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->component = 'local_greetings';
-$plugin->release = '0.1.7';
-$plugin->version = 2024093000;
-$plugin->requires = 2022041900;
-$plugin->maturity = MATURITY_ALPHA;
+this.ngOnDestroy = () => observer.off();

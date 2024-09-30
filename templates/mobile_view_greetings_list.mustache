@@ -44,4 +44,13 @@
 <%^messages%>
     <p>{{ 'plugin.local_greetings.nomessages' | translate }}</p>
 <%/messages%>
+
+<%#postmessages%>
+    <ion-fab core-fab vertical="bottom" horizontal="end" slot="fixed"
+        core-site-plugins-new-content component="local_greetings" method="mobile_view_greetings_form">
+        <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+<%/postmessages%>
 </div>

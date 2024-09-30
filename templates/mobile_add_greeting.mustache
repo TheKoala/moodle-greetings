@@ -1,0 +1,62 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_greetings/mobile_add_greeting
+
+    TODO describe template mobile_add_greeting
+
+    Example context (json):
+    {
+    }
+}}
+
+{{=<% %>=}}
+
+<%#canpost%>
+<ion-content>
+    <ion-list>
+        <ion-item>
+            <ion-input id="local-new-greeting"
+                label="{{ 'plugin.local_greetings.yourmessage' | translate }}" label-placement="floating"
+                placeholder="{{ 'plugin.local_greetings.yourmessagehint' | translate }}"
+                maxlength="200" [(ngModel)]="CONTENT_OTHERDATA.message">
+            </ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-button class="ion-margin" expand="block"
+            core-site-plugins-call-ws name="local_greetings_add_greeting"
+            [params]="{message: CONTENT_OTHERDATA.message, userid: <% userid %>}"
+            goBackOnSuccess="true" (onSuccess)="messagesUpdated()">
+                {{ 'plugin.local_greetings.submit' | translate }}
+            </ion-button>
+        </ion-item>
+    </ion-list>
+</ion-content>
+<%/canpost%>
+
+<%^canpost%>
+<div>
+    <ion-item padding="1em">
+        <ion-text color="info">
+            <ion-icon name="information-circle"></ion-icon>
+            <span> {{ 'plugin.local_greetings.cannotaddgreeting' | translate }} </span>
+        </ion-text>
+    </ion-item>
+</div>
+<%/canpost%>
+

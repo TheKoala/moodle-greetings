@@ -50,6 +50,10 @@ $addons = [
             ['pluginname', 'local_greetings'],
             ['postedby', 'local_greetings'],
             ['nomessages', 'local_greetings'],
+            ['yourmessage', 'local_greetings'],
+            ['yourmessagehint', 'local_greetings'],
+            ['submit', 'local_greetings'],
+            ['cannotaddgreeting', 'local_greetings'],
         ],
     ],
   ];

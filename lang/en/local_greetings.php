@@ -26,8 +26,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['allmessages'] = 'Greetings - All messages';
+$string['cannotaddgreeting'] = 'Sorry. You cannot post a greeting message.';
 $string['cannoteditmessage'] = 'You cannot edit this message';
 $string['editmessage'] = 'Edit message';
+$string['emptymessage'] = 'Empty message';
 $string['entername'] = 'Enter name';
 $string['greetingloggedinuser'] = 'Greetings, {$a}.';
 $string['greetings:deleteanymessage'] = 'Delete any message on the Greetings wall';
@@ -49,4 +51,6 @@ $string['nomessages'] = 'No record found!';
 $string['norecordfound'] = 'No messages found!';
 $string['pluginname'] = 'Greetings';
 $string['postedby'] = 'Posted by {$a}.';
+$string['submit'] = 'Submit';
 $string['yourmessage'] = 'Your message:';
+$string['yourmessagehint'] = 'Add your message here...';
